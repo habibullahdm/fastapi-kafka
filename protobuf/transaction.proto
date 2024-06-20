@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package transaction;
+
+message Transaction {
+  string transaction_id = 1;
+  double amount = 2;
+  string notes = 3;
+}

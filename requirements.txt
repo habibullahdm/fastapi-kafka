@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+confluent-kafka
+protobuf
+sqlalchemy
+python-dotenv
+pydantic
+asyncio
+starlette
+google
