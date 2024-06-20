@@ -14,13 +14,13 @@ async def produce_transaction(transaction: TransactionRequest):
     global last_transaction_amount
 
     if transaction.amount > last_transaction_amount:
-        transaction.notes = "Recent transactions exceed previous transactions"
+        transaction_notes = "Recent transactions exceed previous transactions"
     if transaction.amount <= last_transaction_amount:
-        transaction.notes = "Recent transactions do not exceed previous transactions"
+        transaction_notes = "Recent transactions do not exceed previous transactions"
 
-    message = transaction.notes
+    value = transaction_notes
 
-    send_to_kafka(config["KAFKA_TOPIC"], message)
+    send_to_kafka(config["KAFKA_TOPIC"], value, transaction.transaction_id)
     last_transaction_amount = transaction.amount
 
     return {"status": "Message produced successfully"}

@@ -2,7 +2,6 @@ from confluent_kafka import Producer
 from dotenv import dotenv_values
 
 config = dotenv_values(".env")
-producer = None
 
 
 def delivery_callback(err, msg):
@@ -27,7 +26,7 @@ def init_kafka_producer():
     producer = Producer(configKafka)
 
 
-def send_to_kafka(topic: str, message):
-    serialized_message = message.SerializeToString()
-    producer.produce(topic, serialized_message, callback=delivery_callback)
+def send_to_kafka(topic, value, key):
+    # serialized_message = value.SerializeToString()
+    producer.produce(topic, value, key, callback=delivery_callback)
     producer.flush()
