@@ -20,7 +20,7 @@ def init_kafka_producer():
 
 def delivery_callback(err, msg):
     if err:
-        print('Message failed delivery: {}'.format(err))
+        print("ERROR: Message failed delivery: {}".format(err))
     else:
         print("Produced event to topic {topic}: key = {key:12} value = {value}".format(
             topic=msg.topic(), key=msg.key().decode('utf-8'), value=msg.value()))

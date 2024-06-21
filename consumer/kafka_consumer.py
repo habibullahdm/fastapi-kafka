@@ -35,8 +35,8 @@ def consume():
             else:
                 transaction_proto = transaction_pb.Transaction()
                 transaction_proto.ParseFromString(msg.value())
-                print("Consumed event from topic {topic}:".format(topic=msg.topic()))
-                print(f"{transaction_proto}")
+                print("Consumed event from topic {topic}:\n{proto}".format(
+                    topic=msg.topic(), proto=transaction_proto))
     except KeyboardInterrupt:
         pass
     finally:
