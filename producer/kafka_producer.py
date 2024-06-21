@@ -4,14 +4,6 @@ from dotenv import dotenv_values
 config = dotenv_values(".env")
 
 
-def delivery_callback(err, msg):
-    if err:
-        print('Message failed delivery: {}'.format(err))
-    else:
-        print("Produced event to topic {topic}: key = {key:12} value = {value:12}".format(
-            topic=msg.topic(), key=msg.key().decode('utf-8'), value=msg.value().decode('utf-8')))
-
-
 def init_kafka_producer():
     global producer
     configKafka = {
@@ -26,7 +18,15 @@ def init_kafka_producer():
     producer = Producer(configKafka)
 
 
+def delivery_callback(err, msg):
+    if err:
+        print('Message failed delivery: {}'.format(err))
+    else:
+        print("Produced event to topic {topic}: key = {key:12} value = {value}".format(
+            topic=msg.topic(), key=msg.key().decode('utf-8'), value=msg.value()))
+
+
 def send_to_kafka(topic, value, key):
-    # serialized_message = value.SerializeToString()
-    producer.produce(topic, value, key, callback=delivery_callback)
+    serialized_value = value.SerializeToString()
+    producer.produce(topic, serialized_value, key, callback=delivery_callback)
     producer.flush()
