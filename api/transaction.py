@@ -16,8 +16,10 @@ async def produce_transaction(transaction: TransactionRequest):
 
     if transaction.amount > last_transaction_amount:
         transaction_notes = "Recent transactions exceed previous transactions"
-    if transaction.amount <= last_transaction_amount:
+    elif transaction.amount < last_transaction_amount:
         transaction_notes = "Recent transactions do not exceed previous transactions"
+    else:
+        transaction_notes = "Recent transactions are equal to previous transactions"
 
     transaction_proto = transaction_pb.Transaction(
         transaction_id=transaction.transaction_id,
